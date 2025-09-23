@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physik Grundkurs Q1 | Interaktives Lernen</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+</head>
+<body class="dark-mode">
+    <!-- Navigation -->
+    <nav class="navbar glass-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-atom"></i>
+                    <div class="orbit orbit-1"></div>
+                    <div class="orbit orbit-2"></div>
+                </div>
+                <span class="logo-text">Physik<span class="accent">GK</span></span>
+            </div>
+
+            <div class="nav-search">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" placeholder="Suche nach Themen, Formeln..." />
+                    <div class="search-suggestions hidden">
+                        <div class="suggestion" data-target="schwingungen">Harmonische Schwingungen</div>
+                        <div class="suggestion" data-target="wellen">Interferenz & Beugung</div>
+                        <div class="suggestion" data-target="felder">Elektrische Felder</div>
+                        <div class="suggestion" data-target="quanten">Photoeffekt</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-controls">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mobile-menu-toggle" id="mobileMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Modern Navigation Menu -->
+        <div class="nav-menu glass-panel">
+            <div class="menu-grid">
+                <a href="#schwingungen" class="menu-item" data-theme="mechanics">
+                    <div class="item-icon"><i class="fas fa-wave-square"></i></div>
+                    <div class="item-content">
+                        <h4>Schwingungen</h4>
+                        <p>Harmonische Bewegungen</p>
+                    </div>
+                </a>
+                <a href="#wellen" class="menu-item" data-theme="waves">
+                    <div class="item-icon"><i class="fas fa-water"></i></div>
+                    <div class="item-content">
+                        <h4>Wellen</h4>
+                        <p>Interferenz & Huygens</p>
+                    </div>
+                </a>
+                <a href="#felder" class="menu-item" data-theme="fields">
+                    <div class="item-icon"><i class="fas fa-magnet"></i></div>
+                    <div class="item-content">
+                        <h4>Felder</h4>
+                        <p>Elektrisch & Magnetisch</p>
+                    </div>
+                </a>
+                <a href="#induktion" class="menu-item" data-theme="induction">
+                    <div class="item-icon"><i class="fas fa-bolt"></i></div>
+                    <div class="item-content">
+                        <h4>Induktion</h4>
+                        <p>Generator & Transformator</p>
+                    </div>
+                </a>
+                <a href="#kondensator" class="menu-item" data-theme="capacitor">
+                    <div class="item-icon"><i class="fas fa-battery-half"></i></div>
+                    <div class="item-content">
+                        <h4>Kondensator</h4>
+                        <p>Energie & Schwingungen</p>
+                    </div>
+                </a>
+                <a href="#quanten" class="menu-item" data-theme="quantum">
+                    <div class="item-icon"><i class="fas fa-atom"></i></div>
+                    <div class="item-content">
+                        <h4>Quanten</h4>
+                        <p>Photoeffekt & Dualismus</p>
+                    </div>
+                </a>
+                <a href="#strahlung" class="menu-item" data-theme="radiation">
+                    <div class="item-icon"><i class="fas fa-radiation"></i></div>
+                    <div class="item-content">
+                        <h4>Strahlung</h4>
+                        <p>Ionisierende Strahlung</p>
+                    </div>
+                </a>
+                <a href="#atomphysik" class="menu-item" data-theme="atomic">
+                    <div class="item-icon"><i class="fas fa-circle-nodes"></i></div>
+                    <div class="item-content">
+                        <h4>Atomphysik</h4>
+                        <p>Spektralanalyse</p>
+                    </div>
+                </a>
+                <a href="#kernphysik" class="menu-item" data-theme="nuclear">
+                    <div class="item-icon"><i class="fas fa-radiation-alt"></i></div>
+                    <div class="item-content">
+                        <h4>Kernphysik</h4>
+                        <p>Radioaktivität</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg">
+            <div class="particle-system"></div>
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+            <div class="gradient-orb orb-3"></div>
+        </div>
+
+        <div class="hero-content">
+            <div class="hero-badge glass-panel">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Qualifikationsphase Q1</span>
+            </div>
+
+            <h1 class="hero-title">
+                Physik 
+                <span class="text-gradient">Grundkurs</span>
+            </h1>
+
+            <p class="hero-subtitle">
+                Entdecke die Gesetze des Universums durch interaktives Lernen, 
+                moderne Visualisierungen und gamifizierte Physik-Experimente
+            </p>
+
+            <div class="hero-stats glass-panel">
+                <div class="stat-item">
+                    <div class="stat-number">
+                        <span class="counter" data-target="9">0</span>
+                        <div class="stat-plus">+</div>
+                    </div>
+                    <div class="stat-label">Themenfelder</div>
+                    <div class="stat-progress"><div class="progress-fill"></div></div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">
+                        <span class="counter" data-target="150">0</span>
+                        <div class="stat-plus">+</div>
+                    </div>
+                    <div class="stat-label">Formeln</div>
+                    <div class="stat-progress"><div class="progress-fill"></div></div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">
+                        <span class="counter" data-target="300">0</span>
+                        <div class="stat-plus">+</div>
+                    </div>
+                    <div class="stat-label">Aufgaben</div>
+                    <div class="stat-progress"><div class="progress-fill"></div></div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">
+                        <span class="counter" data-target="50">0</span>
+                        <div class="stat-plus">+</div>
+                    </div>
+                    <div class="stat-label">Simulationen</div>
+                    <div class="stat-progress"><div class="progress-fill"></div></div>
+                </div>
+            </div>
+
+            <div class="hero-actions">
+                <button class="cta-primary" onclick="scrollToSection('schwingungen')">
+                    <span>Jetzt Lernen</span>
+                    <i class="fas fa-rocket"></i>
+                </button>
+                <button class="cta-secondary" onclick="showQuickAccess()">
+                    <i class="fas fa-compass"></i>
+                    <span>Schnellzugriff</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+            <span>Scroll für mehr</span>
+        </div>
+    </section>
+
+    <!-- Reading Progress -->
+    <div class="reading-progress">
+        <div class="progress-bar"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- 01 - SCHWINGUNGEN -->
+        <section id="schwingungen" class="topic-section" data-theme="mechanics">
+            <div class="section-header">
+                <div class="section-number">01</div>
+                <div class="section-info">
+                    <h2 class="section-title">
+                        <span class="title-icon"><i class="fas fa-wave-square"></i></span>
+                        Harmonische Schwingungen
+                    </h2>
+                    <p class="section-subtitle">Periodische Bewegungen verstehen und mathematisch beschreiben</p>
+                </div>
+            </div>
+
+            <div class="content-layout">
+                <div class="theory-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-book-open"></i> Grundlagen</h3>
+                        <div class="difficulty-badge easy">Grundlagen</div>
+                    </div>
+
+                    <div class="theory-content">
+                        <p>Harmonische Schwingungen sind <strong>periodische Bewegungen</strong> um eine Ruhelage, bei denen die Rückstellkraft proportional zur Auslenkung ist.</p>
+
+                        <div class="key-points">
+                            <div class="key-point">
+                                <div class="point-icon"><i class="fas fa-arrows-alt-h"></i></div>
+                                <div class="point-content">
+                                    <strong>Elongation s(t):</strong> Auslenkung zur Zeit t
+                                </div>
+                            </div>
+                            <div class="key-point">
+                                <div class="point-icon"><i class="fas fa-expand-arrows-alt"></i></div>
+                                <div class="point-content">
+                                    <strong>Amplitude A:</strong> Maximale Auslenkung
+                                </div>
+                            </div>
+                            <div class="key-point">
+                                <div class="point-icon"><i class="fas fa-clock"></i></div>
+                                <div class="point-content">
+                                    <strong>Periodendauer T:</strong> Zeit für eine vollständige Schwingung
+                                </div>
+                            </div>
+                            <div class="key-point">
+                                <div class="point-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                <div class="point-content">
+                                    <strong>Frequenz f:</strong> Anzahl Schwingungen pro Sekunde
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <h4><i class="fas fa-lightbulb"></i> Federpendel</h4>
+                            <p>Beim Federpendel ist die Rückstellkraft proportional zur Auslenkung: \(F = -Ds\)</p>
+                            <p>Die Schwingungsdauer hängt nur von der Masse und der Federkonstante ab, nicht von der Amplitude!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formula-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-equals"></i> Zentrale Formeln</h3>
+                        <button class="formula-toggle" onclick="toggleFormulas(this)">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+
+                    <div class="formula-grid">
+                        <div class="formula-card">
+                            <div class="formula-title">Bewegungsgleichung</div>
+                            <div class="formula-content">\(s(t) = A \cdot \sin(\omega t + \varphi)\)</div>
+                            <div class="formula-explanation">Beschreibt die Auslenkung zu jedem Zeitpunkt</div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">Kreisfrequenz</div>
+                            <div class="formula-content">\(\omega = 2\pi f = \frac{2\pi}{T}\)</div>
+                            <div class="formula-explanation">Verbindet Frequenz und Periodendauer</div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">Federpendel</div>
+                            <div class="formula-content">\(T = 2\pi\sqrt{\frac{m}{D}}\)</div>
+                            <div class="formula-explanation">Periodendauer abhängig von Masse und Federkonstante</div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">Energien</div>
+                            <div class="formula-content">\(E_{\text{ges}} = \frac{1}{2}DA^2\)</div>
+                            <div class="formula-explanation">Gesamtenergie im harmonischen Oszillator</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="simulation-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-play"></i> Interaktive Simulation</h3>
+                        <button class="sim-fullscreen" onclick="openSimulation('pendulum')">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+
+                    <div class="simulation-container">
+                        <canvas id="pendulumSim" width="400" height="300"></canvas>
+                        <div class="sim-controls">
+                            <div class="control-group">
+                                <label>Amplitude: <span id="ampValue">0.1</span> m</label>
+                                <input type="range" id="amplitude" min="0.05" max="0.2" step="0.01" value="0.1">
+                            </div>
+                            <div class="control-group">
+                                <label>Masse: <span id="massValue">0.2</span> kg</label>
+                                <input type="range" id="mass" min="0.1" max="0.5" step="0.1" value="0.2">
+                            </div>
+                            <button class="sim-play" onclick="toggleSimulation('pendulum')">
+                                <i class="fas fa-play"></i> Start
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exercise-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-dumbbell"></i> Übungsaufgabe</h3>
+                        <div class="difficulty-badge medium">Mittelschwer</div>
+                    </div>
+
+                    <div class="exercise-content">
+                        <div class="exercise-problem">
+                            <p>Ein Federpendel mit <strong>m = 0,2 kg</strong> und <strong>D = 50 N/m</strong> schwingt mit <strong>A = 0,1 m</strong>.</p>
+                            <div class="exercise-questions">
+                                <div class="question">a) Periodendauer T berechnen</div>
+                                <div class="question">b) Gesamtenergie bestimmen</div>
+                                <div class="question">c) Maximale Geschwindigkeit finden</div>
+                            </div>
+                        </div>
+
+                        <div class="exercise-solution hidden">
+                            <div class="solution-step">
+                                <strong>a)</strong> \(T = 2\pi\sqrt{\frac{0{,}2\,\text{kg}}{50\,\text{N/m}}} = 0{,}398\,\text{s}\)
+                            </div>
+                            <div class="solution-step">
+                                <strong>b)</strong> \(E_{\text{ges}} = \frac{1}{2} \cdot 50 \cdot (0{,}1)^2 = 0{,}25\,\text{J}\)
+                            </div>
+                            <div class="solution-step">
+                                <strong>c)</strong> \(v_{\text{max}} = A\omega = 0{,}1 \cdot \sqrt{250} = 1{,}58\,\text{m/s}\)
+                            </div>
+                        </div>
+
+                        <button class="solution-toggle" onclick="toggleSolution(this)">
+                            <i class="fas fa-lightbulb"></i> Lösung anzeigen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02 - WELLEN -->
+        <section id="wellen" class="topic-section" data-theme="waves">
+            <div class="section-header">
+                <div class="section-number">02</div>
+                <div class="section-info">
+                    <h2 class="section-title">
+                        <span class="title-icon"><i class="fas fa-water"></i></span>
+                        Beugung und Interferenz
+                    </h2>
+                    <p class="section-subtitle">Das Huygens'sche Prinzip und Wellenphänomene</p>
+                </div>
+            </div>
+
+            <div class="content-layout">
+                <div class="theory-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-book-open"></i> Mechanische Wellen</h3>
+                        <div class="difficulty-badge easy">Grundlagen</div>
+                    </div>
+
+                    <div class="theory-content">
+                        <p>Wellen sind <strong>Störungen</strong>, die sich im Raum ausbreiten und dabei Energie transportieren, ohne Materie zu transportieren.</p>
+
+                        <div class="key-points">
+                            <div class="key-point">
+                                <div class="point-icon"><i class="fas fa-wave-square"></i></div>
+                                <div class="point-content">
+                                    <strong>Wellenlänge λ:</strong> Abstand zwischen zwei Wellenbergen
+                                </div>
+                            </div>
+                            <div class="key-point">
+                                <div class="point-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                <div class="point-content">
+                                    <strong>Frequenz f:</strong> Anzahl Schwingungen pro Sekunde
+                                </div>
+                            </div>
+                            <div class="key-point">
+                                <div class="point-icon"><i class="fas fa-rocket"></i></div>
+                                <div class="point-content">
+                                    <strong>Ausbreitungsgeschwindigkeit c:</strong> Geschwindigkeit der Welle
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <h4><i class="fas fa-eye"></i> Huygens'sches Prinzip</h4>
+                            <p>Jeder Punkt einer Wellenfront kann als Ausgangspunkt einer Elementarwelle betrachtet werden.</p>
+                            <p>Die Einhüllende aller Elementarwellen ergibt die neue Wellenfront.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formula-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-equals"></i> Wellenformeln</h3>
+                    </div>
+
+                    <div class="formula-grid">
+                        <div class="formula-card">
+                            <div class="formula-title">Wellengleichung</div>
+                            <div class="formula-content">\(y(x,t) = A \sin(kx - \omega t + \varphi)\)</div>
+                            <div class="formula-explanation">Allgemeine Form einer Welle</div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">Wellengeschwindigkeit</div>
+                            <div class="formula-content">\(c = f \lambda = \frac{\omega}{k}\)</div>
+                            <div class="formula-explanation">Grundlegende Wellenbeziehung</div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">Doppelspalt - Maxima</div>
+                            <div class="formula-content">\(d \sin\alpha = k\lambda\)</div>
+                            <div class="formula-explanation">Konstruktive Interferenz, k = 0,1,2,...</div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">Brechungsgesetz</div>
+                            <div class="formula-content">\(\frac{\sin\alpha}{\sin\beta} = \frac{c_1}{c_2}\)</div>
+                            <div class="formula-explanation">Snellius'sches Brechungsgesetz</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="simulation-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-play"></i> Interferenz-Simulation</h3>
+                    </div>
+
+                    <div class="simulation-container">
+                        <div class="wave-demo">
+                            <div class="wave-pattern" id="wavePattern"></div>
+                        </div>
+                        <div class="sim-controls">
+                            <div class="control-group">
+                                <label>Wellenlänge: <span id="wavelengthValue">50</span> px</label>
+                                <input type="range" id="wavelength" min="20" max="100" step="5" value="50">
+                            </div>
+                            <div class="control-group">
+                                <label>Frequenz: <span id="frequencyValue">1</span> Hz</label>
+                                <input type="range" id="frequency" min="0.5" max="3" step="0.1" value="1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exercise-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-dumbbell"></i> Übungsaufgabe</h3>
+                        <div class="difficulty-badge medium">Mittelschwer</div>
+                    </div>
+
+                    <div class="exercise-content">
+                        <div class="exercise-problem">
+                            <p>Bei einem Doppelspaltexperiment mit <strong>d = 0,5 mm</strong> ist der Abstand der Maxima auf dem Schirm <strong>2,4 mm</strong>. Der Schirmabstand beträgt <strong>2 m</strong>.</p>
+                            <div class="exercise-questions">
+                                <div class="question">Bestimme die Wellenlänge des Lichts</div>
+                            </div>
+                        </div>
+
+                        <div class="exercise-solution hidden">
+                            <div class="solution-step">
+                                <strong>Lösung:</strong> \(\lambda = \frac{d \cdot \Delta s}{L} = \frac{0{,}5 \times 10^{-3} \times 2{,}4 \times 10^{-3}}{2} = 600\,\text{nm}\)
+                                <br>Das entspricht rotem Licht!
+                            </div>
+                        </div>
+
+                        <button class="solution-toggle" onclick="toggleSolution(this)">
+                            <i class="fas fa-lightbulb"></i> Lösung anzeigen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03 - FELDER -->
+        <section id="felder" class="topic-section" data-theme="fields">
+            <div class="section-header">
+                <div class="section-number">03</div>
+                <div class="section-info">
+                    <h2 class="section-title">
+                        <span class="title-icon"><i class="fas fa-magnet"></i></span>
+                        Elektrische und Magnetische Felder
+                    </h2>
+                    <p class="section-subtitle">Kräfte auf geladene Teilchen und die Erforschung des Elektrons</p>
+                </div>
+            </div>
+
+            <div class="content-layout">
+                <div class="theory-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-book-open"></i> Felder</h3>
+                        <div class="difficulty-badge medium">Mittelschwer</div>
+                    </div>
+
+                    <div class="theory-content">
+                        <p>Felder beschreiben Kräfte, die auf geladene Teilchen wirken, ohne direkten Kontakt.</p>
+
+                        <div class="key-points">
+                            <div class="key-point">
+                                <div class="point-icon"><i class="fas fa-bolt"></i></div>
+                                <div class="point-content">
+                                    <strong>Elektrisches Feld E:</strong> Kraft pro Ladungseinheit
+                                </div>
+                            </div>
+                            <div class="key-point">
+                                <div class="point-icon"><i class="fas fa-magnet"></i></div>
+                                <div class="point-content">
+                                    <strong>Magnetfeld B:</strong> Kraft auf bewegte Ladungen
+                                </div>
+                            </div>
+                            <div class="key-point">
+                                <div class="point-icon"><i class="fas fa-circle"></i></div>
+                                <div class="point-content">
+                                    <strong>Lorentzkraft:</strong> Ablenkung im Magnetfeld
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <h4><i class="fas fa-tv"></i> Braunsche Röhre</h4>
+                            <p>Elektronen werden beschleunigt und durch elektrische/magnetische Felder abgelenkt.</p>
+                            <p>So funktionieren alte Fernseher und Oszilloskope!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formula-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-equals"></i> Feld-Formeln</h3>
+                    </div>
+
+                    <div class="formula-grid">
+                        <div class="formula-card">
+                            <div class="formula-title">Elektrische Feldstärke</div>
+                            <div class="formula-content">\(\vec{E} = \frac{\vec{F}}{Q}\)</div>
+                            <div class="formula-explanation">Definition der elektrischen Feldstärke</div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">Homogenes E-Feld</div>
+                            <div class="formula-content">\(E = \frac{U}{d}\)</div>
+                            <div class="formula-explanation">Feldstärke im Plattenkondensator</div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">Lorentzkraft</div>
+                            <div class="formula-content">\(F_L = QvB\sin\alpha\)</div>
+                            <div class="formula-explanation">Kraft auf bewegte Ladung im B-Feld</div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">Kreisbahn im B-Feld</div>
+                            <div class="formula-content">\(r = \frac{mv}{QB}\)</div>
+                            <div class="formula-explanation">Radius der Elektronenbahn</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="simulation-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-play"></i> Teilchen im Feld</h3>
+                    </div>
+
+                    <div class="simulation-container">
+                        <canvas id="fieldSim" width="400" height="300"></canvas>
+                        <div class="sim-controls">
+                            <div class="control-group">
+                                <label>E-Feld: <span id="efieldValue">1000</span> V/m</label>
+                                <input type="range" id="efield" min="500" max="2000" step="100" value="1000">
+                            </div>
+                            <div class="control-group">
+                                <label>B-Feld: <span id="bfieldValue">0.01</span> T</label>
+                                <input type="range" id="bfield" min="0.005" max="0.02" step="0.001" value="0.01">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exercise-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-dumbbell"></i> Übungsaufgabe</h3>
+                        <div class="difficulty-badge hard">Schwer</div>
+                    </div>
+
+                    <div class="exercise-content">
+                        <div class="exercise-problem">
+                            <p>Ein Elektron (m = 9,11×10⁻³¹ kg, e = 1,6×10⁻¹⁹ C) wird mit v = 10⁶ m/s senkrecht in ein Magnetfeld B = 0,01 T geschossen.</p>
+                            <div class="exercise-questions">
+                                <div class="question">Bestimme den Bahnradius des Elektrons</div>
+                            </div>
+                        </div>
+
+                        <div class="exercise-solution hidden">
+                            <div class="solution-step">
+                                <strong>Lösung:</strong> \(r = \frac{mv}{eB} = \frac{9{,}11 \times 10^{-31} \times 10^6}{1{,}6 \times 10^{-19} \times 0{,}01} = 5{,}69 \times 10^{-5}\,\text{m} = 56{,}9\,\mu\text{m}\)
+                            </div>
+                        </div>
+
+                        <button class="solution-toggle" onclick="toggleSolution(this)">
+                            <i class="fas fa-lightbulb"></i> Lösung anzeigen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 05 - KONDENSATOR -->
+        <section id="kondensator" class="topic-section" data-theme="capacitor">
+            <div class="section-header">
+                <div class="section-number">05</div>
+                <div class="section-info">
+                    <h2 class="section-title">
+                        <span class="title-icon"><i class="fas fa-battery-half"></i></span>
+                        Kondensator & Schwingkreise
+                    </h2>
+                    <p class="section-subtitle">Energiespeicher und elektromagnetische Schwingungen</p>
+                </div>
+            </div>
+
+            <div class="content-layout">
+                <div class="theory-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-book-open"></i> Kondensator</h3>
+                        <div class="difficulty-badge medium">Mittelschwer</div>
+                    </div>
+
+                    <div class="theory-content">
+                        <p>Kondensatoren <strong>speichern elektrische Energie</strong> durch Ladungstrennung auf zwei Platten.</p>
+
+                        <div class="key-points">
+                            <div class="key-point">
+                                <div class="point-icon"><i class="fas fa-battery-full"></i></div>
+                                <div class="point-content">
+                                    <strong>Kapazität C:</strong> Speicherfähigkeit für Ladung
+                                </div>
+                            </div>
+                            <div class="key-point">
+                                <div class="point-icon"><i class="fas fa-clock"></i></div>
+                                <div class="point-content">
+                                    <strong>Zeitkonstante τ = RC:</strong> Charakteristische Ladezeit
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <h4><i class="fas fa-wave-square"></i> LC-Schwingkreis</h4>
+                            <p>Kondensator und Spule tauschen periodisch elektrische und magnetische Energie aus.</p>
+                            <p>Wie ein elektromagnetisches "Pendel"!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formula-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-equals"></i> Kondensator-Formeln</h3>
+                    </div>
+
+                    <div class="formula-grid">
+                        <div class="formula-card">
+                            <div class="formula-title">Kapazität</div>
+                            <div class="formula-content">\(C = \frac{Q}{U}\)</div>
+                            <div class="formula-explanation">Definition der Kapazität</div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">Plattenkondensator</div>
+                            <div class="formula-content">\(C = \varepsilon_0 \varepsilon_r \frac{A}{d}\)</div>
+                            <div class="formula-explanation">Kapazität abhängig von Geometrie</div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">Energie</div>
+                            <div class="formula-content">\(W = \frac{1}{2}CU^2\)</div>
+                            <div class="formula-explanation">Im Kondensator gespeicherte Energie</div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">LC-Schwingung</div>
+                            <div class="formula-content">\(T = 2\pi\sqrt{LC}\)</div>
+                            <div class="formula-explanation">Thomson-Schwingungsformel</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="simulation-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-play"></i> Lade-/Entladesimulation</h3>
+                    </div>
+
+                    <div class="simulation-container">
+                        <div class="capacitor-demo">
+                            <div class="charge-indicator" id="chargeLevel">0%</div>
+                            <div class="voltage-display" id="voltageDisplay">0V</div>
+                        </div>
+                        <div class="sim-controls">
+                            <button class="sim-button" onclick="chargeCapacitor()">
+                                <i class="fas fa-plus"></i> Laden
+                            </button>
+                            <button class="sim-button" onclick="dischargeCapacitor()">
+                                <i class="fas fa-minus"></i> Entladen
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exercise-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-dumbbell"></i> Übungsaufgabe</h3>
+                        <div class="difficulty-badge easy">Einfach</div>
+                    </div>
+
+                    <div class="exercise-content">
+                        <div class="exercise-problem">
+                            <p>Ein Kondensator mit <strong>C = 100 μF</strong> wird auf <strong>U = 12 V</strong> aufgeladen.</p>
+                            <div class="exercise-questions">
+                                <div class="question">a) Gespeicherte Ladung Q</div>
+                                <div class="question">b) Gespeicherte Energie W</div>
+                            </div>
+                        </div>
+
+                        <div class="exercise-solution hidden">
+                            <div class="solution-step">
+                                <strong>a)</strong> \(Q = CU = 100 \times 10^{-6} \times 12 = 1{,}2\,\text{mC}\)
+                            </div>
+                            <div class="solution-step">
+                                <strong>b)</strong> \(W = \frac{1}{2}CU^2 = \frac{1}{2} \times 100 \times 10^{-6} \times 144 = 7{,}2\,\text{mJ}\)
+                            </div>
+                        </div>
+
+                        <button class="solution-toggle" onclick="toggleSolution(this)">
+                            <i class="fas fa-lightbulb"></i> Lösung anzeigen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 06 - QUANTENPHYSIK -->
+        <section id="quanten" class="topic-section" data-theme="quantum">
+            <div class="section-header">
+                <div class="section-number">06</div>
+                <div class="section-info">
+                    <h2 class="section-title">
+                        <span class="title-icon"><i class="fas fa-atom"></i></span>
+                        Quantenobjekte
+                    </h2>
+                    <p class="section-subtitle">Photoeffekt, De-Broglie-Wellen und Welle-Teilchen-Dualismus</p>
+                </div>
+            </div>
+
+            <div class="content-layout">
+                <div class="theory-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-book-open"></i> Quantenphysik</h3>
+                        <div class="difficulty-badge hard">Schwer</div>
+                    </div>
+
+                    <div class="theory-content">
+                        <p>In der Quantenwelt zeigen Teilchen und Licht sowohl <strong>Wellen- als auch Teilcheneigenschaften</strong>.</p>
+
+                        <div class="key-points">
+                            <div class="key-point">
+                                <div class="point-icon"><i class="fas fa-lightbulb"></i></div>
+                                <div class="point-content">
+                                    <strong>Photonen:</strong> Lichtquanten mit Energie E = hf
+                                </div>
+                            </div>
+                            <div class="key-point">
+                                <div class="point-icon"><i class="fas fa-wave-square"></i></div>
+                                <div class="point-content">
+                                    <strong>Materiewellen:</strong> Alle Teilchen haben Wellenlänge λ = h/p
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <h4><i class="fas fa-question-circle"></i> Kopenhagener Deutung</h4>
+                            <p>Quantenobjekte existieren in Superpositionen - erst die Messung bestimmt das Ergebnis!</p>
+                            <p>Die Wellenfunktion beschreibt Wahrscheinlichkeiten.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formula-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-equals"></i> Quanten-Formeln</h3>
+                    </div>
+
+                    <div class="formula-grid">
+                        <div class="formula-card">
+                            <div class="formula-title">Planck'sche Formel</div>
+                            <div class="formula-content">\(E = hf\)</div>
+                            <div class="formula-explanation">Energie eines Photons</div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">Einstein'sche Photogleichung</div>
+                            <div class="formula-content">\(hf = W_A + E_{\text{kin}}\)</div>
+                            <div class="formula-explanation">Photoeffekt-Gleichung</div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">De-Broglie-Wellenlänge</div>
+                            <div class="formula-content">\(\lambda = \frac{h}{p} = \frac{h}{mv}\)</div>
+                            <div class="formula-explanation">Wellenlänge von Materieteilchen</div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">Planck-Konstante</div>
+                            <div class="formula-content">\(h = 6{,}626 \times 10^{-34}\,\text{J·s}\)</div>
+                            <div class="formula-explanation">Fundamentale Naturkonstante</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="simulation-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-play"></i> Doppelspalt-Simulation</h3>
+                    </div>
+
+                    <div class="simulation-container">
+                        <div class="quantum-demo">
+                            <div class="interference-pattern" id="interferencePattern"></div>
+                            <p>Einzelne Photonen erzeugen Interferenzmuster!</p>
+                        </div>
+                        <div class="sim-controls">
+                            <button class="sim-button" onclick="shootPhoton()">
+                                <i class="fas fa-dot-circle"></i> Photon abfeuern
+                            </button>
+                            <button class="sim-button" onclick="resetPattern()">
+                                <i class="fas fa-refresh"></i> Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exercise-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-dumbbell"></i> Übungsaufgabe</h3>
+                        <div class="difficulty-badge medium">Mittelschwer</div>
+                    </div>
+
+                    <div class="exercise-content">
+                        <div class="exercise-problem">
+                            <p>Berechne die <strong>De-Broglie-Wellenlänge</strong> eines Elektrons mit <strong>v = 10⁶ m/s</strong>.</p>
+                        </div>
+
+                        <div class="exercise-solution hidden">
+                            <div class="solution-step">
+                                \(\lambda = \frac{h}{mv} = \frac{6{,}626 \times 10^{-34}}{9{,}11 \times 10^{-31} \times 10^6} = 7{,}27 \times 10^{-10}\,\text{m} = 0{,}727\,\text{nm}\)
+                                <br>Das ist kleiner als ein Atom!
+                            </div>
+                        </div>
+
+                        <button class="solution-toggle" onclick="toggleSolution(this)">
+                            <i class="fas fa-lightbulb"></i> Lösung anzeigen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 07 - STRAHLUNG -->
+        <section id="strahlung" class="topic-section" data-theme="radiation">
+            <div class="section-header">
+                <div class="section-number">07</div>
+                <div class="section-info">
+                    <h2 class="section-title">
+                        <span class="title-icon"><i class="fas fa-radiation"></i></span>
+                        Ionisierende Strahlung
+                    </h2>
+                    <p class="section-subtitle">Röntgenstrahlung und biologische Wirkungen</p>
+                </div>
+            </div>
+
+            <div class="content-layout">
+                <div class="theory-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-book-open"></i> Strahlung</h3>
+                        <div class="difficulty-badge medium">Mittelschwer</div>
+                    </div>
+
+                    <div class="theory-content">
+                        <p><strong>Ionisierende Strahlung</strong> kann Elektronen aus Atomen herausschlagen und ist daher biologisch wirksam.</p>
+
+                        <div class="key-points">
+                            <div class="key-point">
+                                <div class="point-icon"><i class="fas fa-shield-alt"></i></div>
+                                <div class="point-content">
+                                    <strong>α-Strahlung:</strong> Heliumkerne, geringe Reichweite
+                                </div>
+                            </div>
+                            <div class="key-point">
+                                <div class="point-icon"><i class="fas fa-bolt"></i></div>
+                                <div class="point-content">
+                                    <strong>β-Strahlung:</strong> Elektronen/Positronen, mittlere Reichweite
+                                </div>
+                            </div>
+                            <div class="key-point">
+                                <div class="point-icon"><i class="fas fa-wave-square"></i></div>
+                                <div class="point-content">
+                                    <strong>γ-Strahlung:</strong> Elektromagnetische Strahlung, große Reichweite
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <h4><i class="fas fa-medical-kit"></i> Medizinische Anwendung</h4>
+                            <p>Röntgenstrahlung für Diagnose, Gammastrahlung für Krebstherapie.</p>
+                            <p>Nutzen vs. Risiko abwägen!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formula-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-equals"></i> Strahlungs-Formeln</h3>
+                    </div>
+
+                    <div class="formula-grid">
+                        <div class="formula-card">
+                            <div class="formula-title">Röntgen-Grenzwellenlänge</div>
+                            <div class="formula-content">\(\lambda_{\text{min}} = \frac{hc}{eU}\)</div>
+                            <div class="formula-explanation">Minimale Wellenlänge bei Beschleunigungsspannung U</div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">Äquivalentdosis</div>
+                            <div class="formula-content">\(H = D \cdot w_R\)</div>
+                            <div class="formula-explanation">Biologisch wirksame Dosis in Sievert</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="simulation-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-play"></i> Absorption-Simulation</h3>
+                    </div>
+
+                    <div class="simulation-container">
+                        <div class="absorption-demo">
+                            <div class="radiation-source">☢️</div>
+                            <div class="material-layers">
+                                <div class="layer" data-material="paper">Papier</div>
+                                <div class="layer" data-material="aluminum">Aluminium</div>
+                                <div class="layer" data-material="lead">Blei</div>
+                            </div>
+                            <div class="detector">📊</div>
+                        </div>
+                        <p>Verschiedene Materialien stoppen verschiedene Strahlungsarten</p>
+                    </div>
+                </div>
+
+                <div class="exercise-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-dumbbell"></i> Übungsaufgabe</h3>
+                        <div class="difficulty-badge medium">Mittelschwer</div>
+                    </div>
+
+                    <div class="exercise-content">
+                        <div class="exercise-problem">
+                            <p>Eine Röntgenröhre wird mit <strong>U = 50 kV</strong> betrieben.</p>
+                            <div class="exercise-questions">
+                                <div class="question">Berechne die minimale Wellenlänge der erzeugten Röntgenstrahlung</div>
+                            </div>
+                        </div>
+
+                        <div class="exercise-solution hidden">
+                            <div class="solution-step">
+                                \(\lambda_{\text{min}} = \frac{hc}{eU} = \frac{6{,}626 \times 10^{-34} \times 3 \times 10^8}{1{,}6 \times 10^{-19} \times 50 \times 10^3} = 2{,}48 \times 10^{-11}\,\text{m} = 24{,}8\,\text{pm}\)
+                            </div>
+                        </div>
+
+                        <button class="solution-toggle" onclick="toggleSolution(this)">
+                            <i class="fas fa-lightbulb"></i> Lösung anzeigen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 08 - ATOMPHYSIK -->
+        <section id="atomphysik" class="topic-section" data-theme="atomic">
+            <div class="section-header">
+                <div class="section-number">08</div>
+                <div class="section-info">
+                    <h2 class="section-title">
+                        <span class="title-icon"><i class="fas fa-circle-nodes"></i></span>
+                        Atomphysik & Spektren
+                    </h2>
+                    <p class="section-subtitle">Atommodelle und Spektralanalyse</p>
+                </div>
+            </div>
+
+            <div class="content-layout">
+                <div class="theory-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-book-open"></i> Atommodelle</h3>
+                        <div class="difficulty-badge hard">Schwer</div>
+                    </div>
+
+                    <div class="theory-content">
+                        <p>Atome bestehen aus einem <strong>Kern mit Protonen und Neutronen</strong>, umgeben von Elektronen in diskreten Energiezuständen.</p>
+
+                        <div class="key-points">
+                            <div class="key-point">
+                                <div class="point-icon"><i class="fas fa-circle"></i></div>
+                                <div class="point-content">
+                                    <strong>Bohr-Modell:</strong> Elektronen auf festen Bahnen
+                                </div>
+                            </div>
+                            <div class="key-point">
+                                <div class="point-icon"><i class="fas fa-wave-square"></i></div>
+                                <div class="point-content">
+                                    <strong>Quantenmodell:</strong> Orbitale als Wahrscheinlichkeitsverteilungen
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <h4><i class="fas fa-rainbow"></i> Spektralanalyse</h4>
+                            <p>Jedes Element hat charakteristische Spektrallinien - der "Fingerabdruck" der Atome.</p>
+                            <p>So erforschen wir die Zusammensetzung von Sternen!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formula-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-equals"></i> Atom-Formeln</h3>
+                    </div>
+
+                    <div class="formula-grid">
+                        <div class="formula-card">
+                            <div class="formula-title">Energieniveaus (Wasserstoff)</div>
+                            <div class="formula-content">\(E_n = -13{,}6\,\text{eV} \cdot \frac{1}{n^2}\)</div>
+                            <div class="formula-explanation">Bohr'sche Energieformel</div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">Bahnradien</div>
+                            <div class="formula-content">\(r_n = 0{,}529\,\text{nm} \cdot n^2\)</div>
+                            <div class="formula-explanation">Bohr-Radien der Elektronenbahnen</div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">Rydberg-Formel</div>
+                            <div class="formula-content">\(\frac{1}{\lambda} = R \left(\frac{1}{n^2} - \frac{1}{m^2}\right)\)</div>
+                            <div class="formula-explanation">Wasserstoff-Spektrum</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="simulation-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-play"></i> Spektrum-Simulator</h3>
+                    </div>
+
+                    <div class="simulation-container">
+                        <div class="spectrum-demo">
+                            <div class="element-selector">
+                                <button onclick="showSpectrum('hydrogen')">Wasserstoff</button>
+                                <button onclick="showSpectrum('helium')">Helium</button>
+                                <button onclick="showSpectrum('sodium')">Natrium</button>
+                            </div>
+                            <div class="spectrum-display" id="spectrumDisplay">
+                                <div class="spectral-lines"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exercise-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-dumbbell"></i> Übungsaufgabe</h3>
+                        <div class="difficulty-badge hard">Schwer</div>
+                    </div>
+
+                    <div class="exercise-content">
+                        <div class="exercise-problem">
+                            <p>Berechne die <strong>Wellenlänge</strong> des Lichts beim Übergang vom <strong>n=3</strong> zum <strong>n=2</strong> Niveau im Wasserstoffatom.</p>
+                        </div>
+
+                        <div class="exercise-solution hidden">
+                            <div class="solution-step">
+                                \(\Delta E = 13{,}6\,\text{eV} \left(\frac{1}{4} - \frac{1}{9}\right) = 1{,}89\,\text{eV}\)
+                                <br>
+                                \(\lambda = \frac{hc}{\Delta E} = \frac{1{,}24 \times 10^{-6}\,\text{eV·m}}{1{,}89\,\text{eV}} = 656\,\text{nm}\)
+                                <br>Das ist rotes Licht (Hα-Linie)!
+                            </div>
+                        </div>
+
+                        <button class="solution-toggle" onclick="toggleSolution(this)">
+                            <i class="fas fa-lightbulb"></i> Lösung anzeigen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 09 - KERNPHYSIK -->
+        <section id="kernphysik" class="topic-section" data-theme="nuclear">
+            <div class="section-header">
+                <div class="section-number">09</div>
+                <div class="section-info">
+                    <h2 class="section-title">
+                        <span class="title-icon"><i class="fas fa-radiation-alt"></i></span>
+                        Kernphysik & Radioaktivität
+                    </h2>
+                    <p class="section-subtitle">Massendefekt, Kernumwandlungen und Zerfallsprozesse</p>
+                </div>
+            </div>
+
+            <div class="content-layout">
+                <div class="theory-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-book-open"></i> Atomkern</h3>
+                        <div class="difficulty-badge hard">Schwer</div>
+                    </div>
+
+                    <div class="theory-content">
+                        <p>Der <strong>Atomkern</strong> besteht aus Protonen und Neutronen (Nukleonen), die durch die starke Kernkraft zusammengehalten werden.</p>
+
+                        <div class="key-points">
+                            <div class="key-point">
+                                <div class="point-icon"><i class="fas fa-atom"></i></div>
+                                <div class="point-content">
+                                    <strong>Radioaktivität:</strong> Instabile Kerne zerfallen spontan
+                                </div>
+                            </div>
+                            <div class="key-point">
+                                <div class="point-icon"><i class="fas fa-clock"></i></div>
+                                <div class="point-content">
+                                    <strong>Halbwertszeit:</strong> Zeit bis zur Hälfte der Kerne zerfallen
+                                </div>
+                            </div>
+                            <div class="key-point">
+                                <div class="point-icon"><i class="fas fa-fire"></i></div>
+                                <div class="point-content">
+                                    <strong>E = mc²:</strong> Massendefekt wird zu Energie
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <h4><i class="fas fa-bolt"></i> Kernenergie</h4>
+                            <p><strong>Spaltung:</strong> Schwere Kerne → leichtere + Energie</p>
+                            <p><strong>Fusion:</strong> Leichte Kerne → schwerere + Energie</p>
+                            <p>Die Energie der Sterne und der Zukunft!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formula-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-equals"></i> Kern-Formeln</h3>
+                    </div>
+
+                    <div class="formula-grid">
+                        <div class="formula-card">
+                            <div class="formula-title">Zerfallsgesetz</div>
+                            <div class="formula-content">\(N(t) = N_0 e^{-\lambda t}\)</div>
+                            <div class="formula-explanation">Exponentieller Zerfall</div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">Halbwertszeit</div>
+                            <div class="formula-content">\(T_{1/2} = \frac{\ln 2}{\lambda}\)</div>
+                            <div class="formula-explanation">Zusammenhang mit Zerfallskonstante</div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">Einstein-Beziehung</div>
+                            <div class="formula-content">\(E = mc^2\)</div>
+                            <div class="formula-explanation">Masse-Energie-Äquivalenz</div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">Bindungsenergie</div>
+                            <div class="formula-content">\(E_B = (Zm_p + Nm_n - M)c^2\)</div>
+                            <div class="formula-explanation">Energie zur Kerntrennung</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="simulation-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-play"></i> Zerfall-Simulation</h3>
+                    </div>
+
+                    <div class="simulation-container">
+                        <div class="decay-demo">
+                            <div class="nucleus-grid" id="nucleusGrid"></div>
+                            <div class="decay-stats">
+                                <div>Verbleibende Kerne: <span id="remainingNuclei">1000</span></div>
+                                <div>Zeit: <span id="decayTime">0</span> Jahre</div>
+                            </div>
+                        </div>
+                        <div class="sim-controls">
+                            <button class="sim-button" onclick="startDecay()">
+                                <i class="fas fa-play"></i> Zerfall starten
+                            </button>
+                            <button class="sim-button" onclick="resetDecay()">
+                                <i class="fas fa-refresh"></i> Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exercise-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-dumbbell"></i> Übungsaufgabe</h3>
+                        <div class="difficulty-badge medium">Mittelschwer</div>
+                    </div>
+
+                    <div class="exercise-content">
+                        <div class="exercise-problem">
+                            <p><strong>Radium-226</strong> hat eine Halbwertszeit von <strong>1602 Jahren</strong>.</p>
+                            <div class="exercise-questions">
+                                <div class="question">Nach welcher Zeit ist noch 1/8 der ursprünglichen Menge vorhanden?</div>
+                            </div>
+                        </div>
+
+                        <div class="exercise-solution hidden">
+                            <div class="solution-step">
+                                \(\frac{1}{8} = \left(\frac{1}{2}\right)^3\), also nach 3 Halbwertszeiten:
+                                <br>
+                                \(t = 3 \times 1602\,\text{Jahre} = 4806\,\text{Jahre}\)
+                            </div>
+                        </div>
+
+                        <button class="solution-toggle" onclick="toggleSolution(this)">
+                            <i class="fas fa-lightbulb"></i> Lösung anzeigen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+ -->
+
+
+        <!-- 04 - INDUKTION -->
+        <section id="induktion" class="topic-section" data-theme="induction">
+            <div class="section-header">
+                <div class="section-number">04</div>
+                <div class="section-info">
+                    <h2 class="section-title">
+                        <span class="title-icon"><i class="fas fa-bolt"></i></span>
+                        Elektromagnetische Induktion
+                    </h2>
+                    <p class="section-subtitle">Von der Leiterschaukel zum Generator</p>
+                </div>
+            </div>
+
+            <div class="content-layout">
+                <div class="theory-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-book-open"></i> Induktion</h3>
+                        <div class="difficulty-badge medium">Mittelschwer</div>
+                    </div>
+
+                    <div class="theory-content">
+                        <p>Ändert sich der <strong>magnetische Fluss</strong> durch eine Spule, wird eine Spannung induziert.</p>
+
+                        <div class="info-box">
+                            <h4><i class="fas fa-arrows-spin"></i> Lenz'sche Regel</h4>
+                            <p>Die induzierte Spannung ist so gerichtet, dass der induzierte Strom seiner Ursache entgegenwirkt.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formula-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-equals"></i> Induktions-Formeln</h3>
+                    </div>
+
+                    <div class="formula-grid">
+                        <div class="formula-card">
+                            <div class="formula-title">Induktionsgesetz</div>
+                            <div class="formula-content">\(U_{\text{ind}} = -\frac{\text{d}\Phi}{\text{d}t}\)</div>
+                            <div class="formula-explanation">Faraday'sches Induktionsgesetz</div>
+                        </div>
+
+                        <div class="formula-card">
+                            <div class="formula-title">Transformator</div>
+                            <div class="formula-content">\(\frac{U_1}{U_2} = \frac{n_1}{n_2}\)</div>
+                            <div class="formula-explanation">Spannungsübersetzung</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="simulation-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-play"></i> Generator-Simulation</h3>
+                    </div>
+                    <div class="simulation-placeholder">
+                        <i class="fas fa-cog fa-spin"></i>
+                        <p>Interaktiver Generator</p>
+                    </div>
+                </div>
+
+                <div class="exercise-panel glass-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-dumbbell"></i> Transformator-Aufgabe</h3>
+                        <div class="difficulty-badge easy">Einfach</div>
+                    </div>
+
+                    <div class="exercise-content">
+                        <div class="exercise-problem">
+                            <p>Ein Transformator: Primärspule 500 Windungen, Sekundärspule 100 Windungen, Primärspannung 230 V.</p>
+                            <div class="exercise-questions">
+                                <div class="question">Berechne die Sekundärspannung</div>
+                            </div>
+                        </div>
+
+                        <div class="exercise-solution hidden">
+                            <div class="solution-step">
+                                \(U_2 = U_1 \cdot \frac{n_2}{n_1} = 230 \times \frac{100}{500} = 46\,\text{V}\)
+                            </div>
+                        </div>
+
+                        <button class="solution-toggle" onclick="toggleSolution(this)">
+                            <i class="fas fa-lightbulb"></i> Lösung anzeigen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+    </main>
+
+    <!-- Floating Action Button -->
+    <div class="fab-container">
+        <div class="fab-main" id="fabMain">
+            <i class="fas fa-plus"></i>
+        </div>
+        <div class="fab-menu hidden">
+            <div class="fab-item" onclick="openNotes()">
+                <i class="fas fa-sticky-note"></i>
+                <span>Notizen</span>
+            </div>
+            <div class="fab-item" onclick="openCalculator()">
+                <i class="fas fa-calculator"></i>
+                <span>Rechner</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer glass-panel">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Physik Grundkurs Q1</h4>
+                <p>Interaktives Lernen für die Qualifikationsphase</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Schnelllinks</h4>
+                <a href="#schwingungen">Schwingungen</a>
+                <a href="#wellen">Wellen</a>
+                <a href="#quanten">Quantenphysik</a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 Physik Grundkurs Kompendium</p>
+            <p class="author-credit">Mit ❤️ erstellt von <strong>Kian Majidian Q1</strong></p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
